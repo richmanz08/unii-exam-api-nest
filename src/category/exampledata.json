@@ -1,0 +1,1146 @@
+{
+    "StatusCode": 200,
+    "success": true,
+    "productList": [
+        {
+            "categoryId": "01",
+            "categoryName": "พลาสติก",
+            "subcategory": [
+                {
+                    "subCategoryId": "0101",
+                    "subCategoryName": "ขวดน้ำPETใสในเครือเป๊ปซี่"
+                },
+                {
+                    "subCategoryId": "0102",
+                    "subCategoryName": "ขวดน้ำPETใส"
+                },
+                {
+                    "subCategoryId": "0103",
+                    "subCategoryName": "ขวดน้ำPET(สีเขียว)"
+                },
+                {
+                    "subCategoryId": "0104",
+                    "subCategoryName": "ขวดน้ำPETใส(สกรีน)"
+                },
+                {
+                    "subCategoryId": "0105",
+                    "subCategoryName": "ขวดน้ำขาว-ขุ่น(HDPE)"
+                },
+                {
+                    "subCategoryId": "0106",
+                    "subCategoryName": "ถังน้ำขาว-ขุ่น20ลิตร(HDPE)"
+                },
+                {
+                    "subCategoryId": "0107",
+                    "subCategoryName": "พลาสติกแผ่นป้ายอะคีลิค"
+                },
+                {
+                    "subCategoryId": "0108",
+                    "subCategoryName": "พลาสติกขวดน้ำเกลือ(ตัดจุก)"
+                },
+                {
+                    "subCategoryId": "0109",
+                    "subCategoryName": "พลาสติกขวดน้ำเกลือ(ไม่ตัดจุก)"
+                },
+                {
+                    "subCategoryId": "0110",
+                    "subCategoryName": "พลาสติกกรอบจม(ชิ้นใหญ่)"
+                },
+                {
+                    "subCategoryId": "0111",
+                    "subCategoryName": "สายรัดPET(สีเขียวใส)"
+                },
+                {
+                    "subCategoryId": "0112",
+                    "subCategoryName": "สายรัดPPลอยน้ำ(รวมสี)"
+                },
+                {
+                    "subCategoryId": "0113",
+                    "subCategoryName": "เศษถุงปุ๋ย(ไม่เปียกน้ำ)"
+                },
+                {
+                    "subCategoryId": "0114",
+                    "subCategoryName": "พลาสติกรวมสี"
+                },
+                {
+                    "subCategoryId": "0115",
+                    "subCategoryName": "ขวดPVCใส/สี"
+                },
+                {
+                    "subCategoryId": "0116",
+                    "subCategoryName": "พลาสติกแผ่นDVD"
+                },
+                {
+                    "subCategoryId": "0117",
+                    "subCategoryName": "พลาสติกแผ่นVCD"
+                },
+                {
+                    "subCategoryId": "0118",
+                    "subCategoryName": "สายยางอ่อน"
+                },
+                {
+                    "subCategoryId": "0119",
+                    "subCategoryName": "สายยางแข็ง"
+                },
+                {
+                    "subCategoryId": "0120",
+                    "subCategoryName": "สายยางเขียว"
+                },
+                {
+                    "subCategoryId": "0121",
+                    "subCategoryName": "แผ่นฟิวเจอร์ บอร์ด(สี)"
+                },
+                {
+                    "subCategoryId": "0122",
+                    "subCategoryName": "แผ่นฟิวเจอร์บอร์ด(ดํา)"
+                },
+                {
+                    "subCategoryId": "0123",
+                    "subCategoryName": "เส้นพลาสติกจากขวด​น้ำอัดลม​ กว้าง​ 0.5 ซม.​ ยาว​ 40 ซม.​ ไม่มีรอยต่อของเส้น"
+                }
+            ]
+        },
+        {
+            "categoryId": "02",
+            "categoryName": "เศษแก้ว-ขวดแก้ว",
+            "subcategory": [
+                {
+                    "subCategoryId": "0201",
+                    "subCategoryName": "ขวดเบียร์ช้าง(สีเขียว สะอาด):ใบ"
+                },
+                {
+                    "subCategoryId": "0202",
+                    "subCategoryName": "ขวดเบียร์ช้าง(เขียว)/กล่อง/สะอาด"
+                },
+                {
+                    "subCategoryId": "0203",
+                    "subCategoryName": "ขวดเบียร์ลีโอ : ใบ"
+                },
+                {
+                    "subCategoryId": "0204",
+                    "subCategoryName": "ขวดเบียร์ลีโอ / กล่อง / สะอาด"
+                },
+                {
+                    "subCategoryId": "0205",
+                    "subCategoryName": "เหล้าขาวใหญ่ รวงข้าว 625 ml./ลัง"
+                },
+                {
+                    "subCategoryId": "0206",
+                    "subCategoryName": "เหล้าขาวเล็ก รวงข้าว 330 ml./ลัง"
+                },
+                {
+                    "subCategoryId": "0207",
+                    "subCategoryName": "ขวดซอสตราเด็กสมบูรณ์:ลัง(12)"
+                },
+                {
+                    "subCategoryId": "0208",
+                    "subCategoryName": "หงส์ทองกลม 700 ml."
+                },
+                {
+                    "subCategoryId": "0209",
+                    "subCategoryName": "แสงโสมกลม 700 ml."
+                },
+                {
+                    "subCategoryId": "0210",
+                    "subCategoryName": "ขวดเบียร์อาชา 630 ml."
+                },
+                {
+                    "subCategoryId": "0211",
+                    "subCategoryName": "แสงโสมแบน 300 ml."
+                },
+                {
+                    "subCategoryId": "0212",
+                    "subCategoryName": "หงส์ทองแบน 350 ml."
+                },
+                {
+                    "subCategoryId": "0213",
+                    "subCategoryName": "ขวดเบียร์ไฮเนเก้น (ใหญ่) – ใบ / กล่อง"
+                },
+                {
+                    "subCategoryId": "0214",
+                    "subCategoryName": "เศษแก้วรวมสี"
+                },
+                {
+                    "subCategoryId": "0215",
+                    "subCategoryName": "เศษแก้วสีเขียว"
+                },
+                {
+                    "subCategoryId": "0216",
+                    "subCategoryName": "เศษแก้วสีขาว"
+                },
+                {
+                    "subCategoryId": "0217",
+                    "subCategoryName": "เศษแก้วสีแดง"
+                },
+                {
+                    "subCategoryId": "0218",
+                    "subCategoryName": "ขวดน้ำปลา:ใบ"
+                },
+                {
+                    "subCategoryId": "0219",
+                    "subCategoryName": "ขวดน้ำปลา / ใบ พร้อมกล่อง"
+                },
+                {
+                    "subCategoryId": "0220",
+                    "subCategoryName": "เบียร์ช้างใหญ่ 620 ml. / กล่อง"
+                },
+                {
+                    "subCategoryId": "0221",
+                    "subCategoryName": "เบียร์ช้างเล็ก 320 ml. / กล่อง"
+                },
+                {
+                    "subCategoryId": "0222",
+                    "subCategoryName": "เฟเดอร์บรอยใหญ่ 640 ml."
+                },
+                {
+                    "subCategoryId": "0223",
+                    "subCategoryName": "เฟเดอร์บรอยเล็ก 330 ml."
+                },
+                {
+                    "subCategoryId": "0224",
+                    "subCategoryName": "เหล้าขาวเล็ก ขวดเรียบ 330 ml."
+                },
+                {
+                    "subCategoryId": "0225",
+                    "subCategoryName": "เหล้าขาวเล็ก ผสม 330 ml."
+                },
+                {
+                    "subCategoryId": "0226",
+                    "subCategoryName": "เหล้าขาวใหญ่ ขวดเรียบ 625 ml."
+                },
+                {
+                    "subCategoryId": "0227",
+                    "subCategoryName": "เหล้าขาวใหญ่ ผสม 625 ml."
+                },
+                {
+                    "subCategoryId": "0228",
+                    "subCategoryName": "หงส์ทองกลม 700 ml. โฉมใหม่"
+                },
+                {
+                    "subCategoryId": "0229",
+                    "subCategoryName": "ขวดสีชารวม 625 ml. ตกเกรด"
+                },
+                {
+                    "subCategoryId": "0230",
+                    "subCategoryName": "ขวดสุราสีขาวรวม 700 ml. ตกเกรด"
+                },
+                {
+                    "subCategoryId": "0231",
+                    "subCategoryName": "ขวดสุราสีขาวรวม 1000 ml."
+                },
+                {
+                    "subCategoryId": "0232",
+                    "subCategoryName": "ขวดสีชาเก่า​ 625​ ml​"
+                },
+                {
+                    "subCategoryId": "0233",
+                    "subCategoryName": "สิงห์เล็ก​ กล่อง​"
+                },
+                {
+                    "subCategoryId": "0234",
+                    "subCategoryName": "สิงห์ใหญ่​ กล่อง"
+                },
+                {
+                    "subCategoryId": "0235",
+                    "subCategoryName": "นิยมไทย(ใหญ่) 625 ml."
+                },
+                {
+                    "subCategoryId": "0236",
+                    "subCategoryName": "นิยมไทย(เล็ก) 330 ml."
+                }
+            ]
+        },
+        {
+            "categoryId": "03",
+            "categoryName": "เศษเหล็ก",
+            "subcategory": [
+                {
+                    "subCategoryId": "0301",
+                    "subCategoryName": "เหล็กหนาพิเศษซอยสั้น"
+                },
+                {
+                    "subCategoryId": "0302",
+                    "subCategoryName": "เหล็กหนาพิเศษซอยสั้น(ยาวไม่เกิน80ซม.)"
+                },
+                {
+                    "subCategoryId": "0303",
+                    "subCategoryName": "เหล็กหนาไม่ซอย"
+                },
+                {
+                    "subCategoryId": "0304",
+                    "subCategoryName": "เหล็กย่อยซอยสั้น(ยาวไม่เกิน50ซม.)"
+                },
+                {
+                    "subCategoryId": "0305",
+                    "subCategoryName": "เหล็กย่อยไม่ซอย"
+                },
+                {
+                    "subCategoryId": "0306",
+                    "subCategoryName": "เหล็กโช๊คอัพ"
+                },
+                {
+                    "subCategoryId": "0307",
+                    "subCategoryName": "ลวดสลิง(มัดมา)"
+                },
+                {
+                    "subCategoryId": "0308",
+                    "subCategoryName": "ลวดสลิง(ไม่มัดมา)"
+                },
+                {
+                    "subCategoryId": "0309",
+                    "subCategoryName": "เหล็กตะปู"
+                },
+                {
+                    "subCategoryId": "0310",
+                    "subCategoryName": "เหล็กบางซอยสั้น(ยาวไม่เกิน50ซม.)"
+                },
+                {
+                    "subCategoryId": "0311",
+                    "subCategoryName": "เหล็กหล่อชิ้นเล็ก"
+                },
+                {
+                    "subCategoryId": "0312",
+                    "subCategoryName": "เหล็กหล่อชิ้นใหญ่(น้ำหนักไม่เกิน500กก.)"
+                },
+                {
+                    "subCategoryId": "0313",
+                    "subCategoryName": "เหล็กหล่อชิ้นใหญ่(น้ำหนักไม่เกิน1,500กก.)"
+                },
+                {
+                    "subCategoryId": "0314",
+                    "subCategoryName": "เหล็กหล่อเครื่องติดข้อเหวี่ยง"
+                },
+                {
+                    "subCategoryId": "0315",
+                    "subCategoryName": "เหล็กเส้น1นิ้ว(ยาว1.20เมตรขึ้นไป)"
+                },
+                {
+                    "subCategoryId": "0316",
+                    "subCategoryName": "กระป๋อง"
+                },
+                {
+                    "subCategoryId": "0317",
+                    "subCategoryName": "เหล็กรถเก๋ง,ปิคอัพทั้งคัน"
+                },
+                {
+                    "subCategoryId": "0318",
+                    "subCategoryName": "เหล็กขี้กลึง"
+                },
+                {
+                    "subCategoryId": "0319",
+                    "subCategoryName": "สังกะสีท่อแอร์หนาใหม่"
+                },
+                {
+                    "subCategoryId": "0320",
+                    "subCategoryName": "เหล็กเส้น6หุน(ยาว2.50เมตรขึ้นไป)"
+                },
+                {
+                    "subCategoryId": "0321",
+                    "subCategoryName": "สังกะสี"
+                },
+                {
+                    "subCategoryId": "0322",
+                    "subCategoryName": "เหล็กบางไม่ซอย"
+                },
+                {
+                    "subCategoryId": "0323",
+                    "subCategoryName": "เหล็กเส้นยุ่งๆ"
+                },
+                {
+                    "subCategoryId": "0324",
+                    "subCategoryName": "เหล็กปั๊ม"
+                }
+            ]
+        },
+        {
+            "categoryId": "04",
+            "categoryName": "เศษกระดาษ",
+            "subcategory": [
+                {
+                    "subCategoryId": "0401",
+                    "subCategoryName": "กระดาษแข็งกล่องน้ำตาล"
+                },
+                {
+                    "subCategoryId": "0402",
+                    "subCategoryName": "กระดาษแข็งกล่องน้ำตาล อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0403",
+                    "subCategoryName": "กระดาษสี/กระดาษกล่อง(รองเท้า/ผลไม้)"
+                },
+                {
+                    "subCategoryId": "0404",
+                    "subCategoryName": "กระดาษสี/กระดาษกล่อง(รองเท้า/ผลไม้) อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0405",
+                    "subCategoryName": "กระดาษหนังสือเล่มรวม"
+                },
+                {
+                    "subCategoryId": "0406",
+                    "subCategoryName": "กระดาษหนังสือเล่มรวม อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0407",
+                    "subCategoryName": "กระดาษย่อยสวย"
+                },
+                {
+                    "subCategoryId": "0408",
+                    "subCategoryName": "กระดาษย่อยสวย อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0409",
+                    "subCategoryName": "กระดาษอาร์ตมัน"
+                },
+                {
+                    "subCategoryId": "0410",
+                    "subCategoryName": "กระดาษอาร์ตมัน อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0411",
+                    "subCategoryName": "กระดาษถุงปูน"
+                },
+                {
+                    "subCategoryId": "0412",
+                    "subCategoryName": "กระดาษถุงปูน อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0413",
+                    "subCategoryName": "กระดาษขาว-ดำ"
+                },
+                {
+                    "subCategoryId": "0414",
+                    "subCategoryName": "กระดาษขาว-ดำ อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0415",
+                    "subCategoryName": "กระดาษสมุด"
+                },
+                {
+                    "subCategoryId": "0416",
+                    "subCategoryName": "กระดาษสมุด อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0417",
+                    "subCategoryName": "กระดาษหนังสือพิมพ์"
+                },
+                {
+                    "subCategoryId": "0418",
+                    "subCategoryName": "กระดาษหนังสือพิมพ์ อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0419",
+                    "subCategoryName": "กระดาษกล่องนม/ถุงนม/กล่องน้ำผลไม้"
+                },
+                {
+                    "subCategoryId": "0420",
+                    "subCategoryName": "กระดาษกล่องนม/ถุงนม/กล่องน้ำผลไม้ อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0421",
+                    "subCategoryName": "กระดาษย่อยเคลือบมันหน้าเดียว"
+                },
+                {
+                    "subCategoryId": "0422",
+                    "subCategoryName": "กระดาษย่อยเคลือบมันหน้าเดียว อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0423",
+                    "subCategoryName": "เศษ​แหวนกระดาษ​"
+                },
+                {
+                    "subCategoryId": "0424",
+                    "subCategoryName": "เศษ​แหวนกระดาษ​ อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0425",
+                    "subCategoryName": "กระดาษ เคลือบเทียนกันชื้น"
+                },
+                {
+                    "subCategoryId": "0426",
+                    "subCategoryName": "กระดาษเคลือบเทียนกันชื้น อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0427",
+                    "subCategoryName": "แกนกระดาษอ่อน"
+                },
+                {
+                    "subCategoryId": "0428",
+                    "subCategoryName": "แกนกระดาษอ่อน อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0429",
+                    "subCategoryName": "กระดาษ​ TOM​ G"
+                },
+                {
+                    "subCategoryId": "0430",
+                    "subCategoryName": "กระดาษ​ TOM​ G อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0431",
+                    "subCategoryName": "กระดาษ​ถุงแป้ง"
+                },
+                {
+                    "subCategoryId": "0432",
+                    "subCategoryName": "กระดาษ​ถุงแป้ง อัดก้อน"
+                },
+                {
+                    "subCategoryId": "0433",
+                    "subCategoryName": "กระดาษ​จับ​จั๊ว"
+                },
+                {
+                    "subCategoryId": "0434",
+                    "subCategoryName": "กระดาษ​จับ​จั๊ว อัดก้อน"
+                }
+            ]
+        },
+        {
+            "categoryId": "05",
+            "categoryName": "โลหะที่มีค่าสูง",
+            "subcategory": [
+                {
+                    "subCategoryId": "0501",
+                    "subCategoryName": "อลูมิเนียมกระป๋อง"
+                },
+                {
+                    "subCategoryId": "0502",
+                    "subCategoryName": "อลูมิเนียมหนา"
+                },
+                {
+                    "subCategoryId": "0503",
+                    "subCategoryName": "อลูมิเนียมหม้อน้ำ"
+                },
+                {
+                    "subCategoryId": "0504",
+                    "subCategoryName": "ก้นกระทะไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0505",
+                    "subCategoryName": "อลูมิเนียมอัลลอยด์"
+                },
+                {
+                    "subCategoryId": "0506",
+                    "subCategoryName": "อลูมิเนียมบางสะอาด"
+                },
+                {
+                    "subCategoryId": "0507",
+                    "subCategoryName": "อลูมิเนียมมุ้งลวด"
+                },
+                {
+                    "subCategoryId": "0508",
+                    "subCategoryName": "สแตนเลส(304)"
+                },
+                {
+                    "subCategoryId": "0509",
+                    "subCategoryName": "แบตเตอรี่ขาว"
+                },
+                {
+                    "subCategoryId": "0510",
+                    "subCategoryName": "แบตเตอรี่สื่อสาร"
+                },
+                {
+                    "subCategoryId": "0511",
+                    "subCategoryName": "แบตเตอรี่ดำ"
+                },
+                {
+                    "subCategoryId": "0512",
+                    "subCategoryName": "แบตเตอรี่มอเตอร์ไซค์"
+                },
+                {
+                    "subCategoryId": "0513",
+                    "subCategoryName": "อลูมิเนียมฝาจุกแกะ"
+                },
+                {
+                    "subCategoryId": "0514",
+                    "subCategoryName": "อลูมิเนียมฝาจุกไม่แกะ"
+                },
+                {
+                    "subCategoryId": "0515",
+                    "subCategoryName": "ขี้กลึงทองเหลือง"
+                },
+                {
+                    "subCategoryId": "0516",
+                    "subCategoryName": "ทองแดงปอกสวย(1)"
+                },
+                {
+                    "subCategoryId": "0517",
+                    "subCategoryName": "ทองแดงช๊อตใหญ่(2)"
+                },
+                {
+                    "subCategoryId": "0518",
+                    "subCategoryName": "ทองแดงเผาใหญ่(3)"
+                },
+                {
+                    "subCategoryId": "0519",
+                    "subCategoryName": "ทองแดงรวม(4)"
+                },
+                {
+                    "subCategoryId": "0520",
+                    "subCategoryName": "ทองแดงเส้นเล็ก เคลือบขาว (4/1)"
+                },
+                {
+                    "subCategoryId": "0521",
+                    "subCategoryName": "อลูมิเนียมฉากสะอาด"
+                },
+                {
+                    "subCategoryId": "0522",
+                    "subCategoryName": "อลูมิเนียมฉากลายไม้"
+                },
+                {
+                    "subCategoryId": "0523",
+                    "subCategoryName": "ล้อแม็กรถยนต์"
+                },
+                {
+                    "subCategoryId": "0524",
+                    "subCategoryName": "ล้อมอเตอร์ไซค์แบบรีด"
+                },
+                {
+                    "subCategoryId": "0525",
+                    "subCategoryName": "อลูมิเนียมเครื่องยนต์"
+                },
+                {
+                    "subCategoryId": "0526",
+                    "subCategoryName": "ก้ามเบรคแกะผ้า/เหล็ก"
+                },
+                {
+                    "subCategoryId": "0527",
+                    "subCategoryName": "อลูมิเนียมสายไฟปอก"
+                },
+                {
+                    "subCategoryId": "0528",
+                    "subCategoryName": "อลูมิเนียมกระทะผัด"
+                },
+                {
+                    "subCategoryId": "0529",
+                    "subCategoryName": "ป้ายทะเบียนรถ"
+                },
+                {
+                    "subCategoryId": "0530",
+                    "subCategoryName": "ฮาร์ดดิสติดสี"
+                },
+                {
+                    "subCategoryId": "0531",
+                    "subCategoryName": "แผ่นเพลทโรงพิมพ์"
+                },
+                {
+                    "subCategoryId": "0532",
+                    "subCategoryName": "แผ่นปั๊ม 1100"
+                },
+                {
+                    "subCategoryId": "0533",
+                    "subCategoryName": "หลอดยาใหม่ไม่มีสี"
+                },
+                {
+                    "subCategoryId": "0534",
+                    "subCategoryName": "ฮีทซิงค์"
+                },
+                {
+                    "subCategoryId": "0535",
+                    "subCategoryName": "อลูมิเนียมสายไฟเปลือย"
+                },
+                {
+                    "subCategoryId": "0536",
+                    "subCategoryName": "อลูมิเนียมแอร์แกะ (ฟินแอร์)"
+                },
+                {
+                    "subCategoryId": "0537",
+                    "subCategoryName": "หม้อน้ำไส้ทองแดง"
+                },
+                {
+                    "subCategoryId": "0538",
+                    "subCategoryName": "ลูกสูบรถยนต์ไม่ติดเหล็ก"
+                },
+                {
+                    "subCategoryId": "0539",
+                    "subCategoryName": "อลูมิเนียม​บาง (ติดเหล็ก)"
+                },
+                {
+                    "subCategoryId": "0540",
+                    "subCategoryName": "ล้อแม็ก​โครเมียม"
+                },
+                {
+                    "subCategoryId": "0541",
+                    "subCategoryName": "อลูมิเนียม​ฉากติดเหล็ก"
+                },
+                {
+                    "subCategoryId": "0542",
+                    "subCategoryName": "อลูมิเนียม​ล้อแม็กติดเหล็ก"
+                },
+                {
+                    "subCategoryId": "0543",
+                    "subCategoryName": "อลูมิเนียม​ล้อแม็ก​ติดสี"
+                },
+                {
+                    "subCategoryId": "0544",
+                    "subCategoryName": "ขี้กลึงแข็ง"
+                },
+                {
+                    "subCategoryId": "0545",
+                    "subCategoryName": "ทองแดงท่อแอร์​ใหม่"
+                },
+                {
+                    "subCategoryId": "0546",
+                    "subCategoryName": "ท่อแอร์​เก่า"
+                },
+                {
+                    "subCategoryId": "0547",
+                    "subCategoryName": "ทองแดงเผาใหญ่"
+                },
+                {
+                    "subCategoryId": "0548",
+                    "subCategoryName": "ทองแดงปอกสวยเส้นเดี่ยว(1/2)"
+                },
+                {
+                    "subCategoryId": "0549",
+                    "subCategoryName": "ขี้กลึงเหนียว"
+                },
+                {
+                    "subCategoryId": "0550",
+                    "subCategoryName": "อลูมิเนียมมู่ลี่"
+                },
+                {
+                    "subCategoryId": "0551",
+                    "subCategoryName": "หม้อน้ำใส้ทองเหลือง"
+                },
+                {
+                    "subCategoryId": "0552",
+                    "subCategoryName": "อลูมิเนียมฉากสั้น(10-30 ซม)"
+                },
+                {
+                    "subCategoryId": "0553",
+                    "subCategoryName": "อลูมิเนียมวงล้อมอเตอร์ไซค์"
+                },
+                {
+                    "subCategoryId": "0554",
+                    "subCategoryName": "อลูมิเนียมล้อแม็กซ์มอเตอร์ไซค์"
+                },
+                {
+                    "subCategoryId": "0555",
+                    "subCategoryName": "อลูมิเนียมผ้าเบรค"
+                },
+                {
+                    "subCategoryId": "0556",
+                    "subCategoryName": "อลูมิเนียม ที-บาร์"
+                },
+                {
+                    "subCategoryId": "0557",
+                    "subCategoryName": "สแตนเลสชิ้นใหญ่/ติดตะกั่ว"
+                },
+                {
+                    "subCategoryId": "0558",
+                    "subCategoryName": "สแตนเลสน๊อต"
+                },
+                {
+                    "subCategoryId": "0559",
+                    "subCategoryName": "สแตนเลสมุ้ง 304"
+                },
+                {
+                    "subCategoryId": "0560",
+                    "subCategoryName": "สแตนเลสเทียม 202 (เลสเทียม)"
+                },
+                {
+                    "subCategoryId": "0561",
+                    "subCategoryName": " อลูมิเนียมหนา(ติดเหล็ก)"
+                },
+                {
+                    "subCategoryId": "0562",
+                    "subCategoryName": "วงล้อจักรยาน"
+                },
+                {
+                    "subCategoryId": "0563",
+                    "subCategoryName": "ลูกสูบติดเหล็ก"
+                }
+            ]
+        },
+        {
+            "categoryId": "06",
+            "categoryName": "เครื่องใช้สำนักงานและเครื่องใช้ไฟฟ้า",
+            "subcategory": [
+                {
+                    "subCategoryId": "0601",
+                    "subCategoryName": "จอคอมพิวเตอร์,คีย์บอร์ด"
+                },
+                {
+                    "subCategoryId": "0602",
+                    "subCategoryName": "เคสคอมพิวเตอร์"
+                },
+                {
+                    "subCategoryId": "0603",
+                    "subCategoryName": "ทีวีเก่า"
+                },
+                {
+                    "subCategoryId": "0604",
+                    "subCategoryName": "เครื่องปริ้นเตอร์,เม้าท์"
+                },
+                {
+                    "subCategoryId": "0605",
+                    "subCategoryName": "UPS(เครื่องสำรองไฟ)"
+                },
+                {
+                    "subCategoryId": "0606",
+                    "subCategoryName": "เครื่องแฟ๊กช์"
+                },
+                {
+                    "subCategoryId": "0607",
+                    "subCategoryName": "เครื่องถ่ายเอกสาร"
+                },
+                {
+                    "subCategoryId": "0608",
+                    "subCategoryName": "โทรศัพท์มือถือสำนักงาน"
+                },
+                {
+                    "subCategoryId": "0609",
+                    "subCategoryName": "อุปกรณ์IC CPUสีเหลี่ยมขาทองคำ"
+                },
+                {
+                    "subCategoryId": "0610",
+                    "subCategoryName": "เครื่องเล่นVCD,DVD"
+                },
+                {
+                    "subCategoryId": "0611",
+                    "subCategoryName": "เครื่องเล่นเสียง/สเตอริโอ"
+                },
+                {
+                    "subCategoryId": "0612",
+                    "subCategoryName": "ตู้ลำโพง(เปลือกพลาสติก)"
+                },
+                {
+                    "subCategoryId": "0613",
+                    "subCategoryName": "พัดลมตั้งโต๊ะ,เพดาน"
+                },
+                {
+                    "subCategoryId": "0614",
+                    "subCategoryName": "แอร์คอนดิชั่น+คอมเพรสเซอร์"
+                },
+                {
+                    "subCategoryId": "0615",
+                    "subCategoryName": "แผงวงจร"
+                },
+                {
+                    "subCategoryId": "0616",
+                    "subCategoryName": "เตาอบ,เตาไมโครเวฟ"
+                },
+                {
+                    "subCategoryId": "0617",
+                    "subCategoryName": "กระติกน้ำร้อน"
+                },
+                {
+                    "subCategoryId": "0618",
+                    "subCategoryName": "เตาไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0619",
+                    "subCategoryName": "หม้อหุงข้าวไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0620",
+                    "subCategoryName": "เครื่องกรองน้ำไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0621",
+                    "subCategoryName": "กระทะไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0622",
+                    "subCategoryName": "เตารีดไฟฟ้า"
+                },
+                {
+                    "subCategoryId": "0623",
+                    "subCategoryName": "ตู้เย็น+คอมเพรสเซอร์"
+                },
+                {
+                    "subCategoryId": "0624",
+                    "subCategoryName": "เครื่องกรองอากาศ"
+                },
+                {
+                    "subCategoryId": "0625",
+                    "subCategoryName": "เครื่องทำน้ำอุ่น"
+                },
+                {
+                    "subCategoryId": "0626",
+                    "subCategoryName": "เครื่องปิ้งขนมปัง"
+                },
+                {
+                    "subCategoryId": "0627",
+                    "subCategoryName": "เครื่องดูดฝุ่น"
+                },
+                {
+                    "subCategoryId": "0628",
+                    "subCategoryName": "เครื่องซักผ้า"
+                },
+                {
+                    "subCategoryId": "0629",
+                    "subCategoryName": "เครื่องปั้มน้ำ"
+                },
+                {
+                    "subCategoryId": "0630",
+                    "subCategoryName": "เครื่องสำรองไฟฉุกเฉิน"
+                },
+                {
+                    "subCategoryId": "0631",
+                    "subCategoryName": "เครื่องทำน้ำเย็น"
+                },
+                {
+                    "subCategoryId": "0632",
+                    "subCategoryName": "ปั้มไดโว้"
+                },
+                {
+                    "subCategoryId": "0633",
+                    "subCategoryName": "พัดลมดูดอากาศ"
+                }
+            ]
+        },
+        {
+            "categoryId": "07",
+            "categoryName": "อื่นๆ",
+            "subcategory": [
+                {
+                    "subCategoryId": "0701",
+                    "subCategoryName": "เทียนไข(แท่งใหญ่)"
+                },
+                {
+                    "subCategoryId": "0702",
+                    "subCategoryName": "เศษเทียนไข"
+                },
+                {
+                    "subCategoryId": "0703",
+                    "subCategoryName": "น้ำมันพืชเก่า/กก.(บรรจุขวดน้ำมันพืช)"
+                },
+                {
+                    "subCategoryId": "0704",
+                    "subCategoryName": "น้ำมันพืชเก่า(ปิ๊บใหม่)"
+                },
+                {
+                    "subCategoryId": "0705",
+                    "subCategoryName": "น้ำมันพืชเก่า(ปิ๊บเก่า)"
+                },
+                {
+                    "subCategoryId": "0706",
+                    "subCategoryName": "กากมะพร้าว"
+                },
+                {
+                    "subCategoryId": "0707",
+                    "subCategoryName": "ยางนอก,ยางใน รถยนต์, รถจักรยาน/ รถมอเตอร์ไซค์"
+                },
+                {
+                    "subCategoryId": "0708",
+                    "subCategoryName": "ที่นอนนุ่น"
+                },
+                {
+                    "subCategoryId": "0709",
+                    "subCategoryName": "กะลามะพร้าวแก่"
+                },
+                {
+                    "subCategoryId": "0710",
+                    "subCategoryName": "ถุงบิ๊กแบ็กจัมโบ้"
+                },
+                {
+                    "subCategoryId": "0711",
+                    "subCategoryName": "น้ำมันเครื่องเก่า"
+                },
+                {
+                    "subCategoryId": "0712",
+                    "subCategoryName": "ยางรถยนต์ตัดแก้ม"
+                },
+                {
+                    "subCategoryId": "0713",
+                    "subCategoryName": "ยางรถยนต์เส้น"
+                },
+                {
+                    "subCategoryId": "0714",
+                    "subCategoryName": "ยางเส้นเรเดียล"
+                }
+            ]
+        },
+        {
+            "categoryId": "08",
+            "categoryName": "ค่าบริหาร",
+            "subcategory": [
+                {
+                    "subCategoryId": "0801",
+                    "subCategoryName": "ค่าส่งเสริมการขาย"
+                },
+                {
+                    "subCategoryId": "0802",
+                    "subCategoryName": "ค่าส่งเสริมการตลาด"
+                }
+            ]
+        },
+        {
+            "categoryId": "09",
+            "categoryName": "Unii Set",
+            "subcategory": [
+                {
+                    "subCategoryId": "0901",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ XS"
+                },
+                {
+                    "subCategoryId": "0902",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ S"
+                },
+                {
+                    "subCategoryId": "0903",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ M"
+                },
+                {
+                    "subCategoryId": "0904",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ L"
+                },
+                {
+                    "subCategoryId": "0905",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ XL"
+                },
+                {
+                    "subCategoryId": "0906",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ XXL"
+                },
+                {
+                    "subCategoryId": "0907",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ 3XL"
+                },
+                {
+                    "subCategoryId": "0908",
+                    "subCategoryName": "เสื้อยืดยูนี่ ไซส์ 4XL"
+                },
+                {
+                    "subCategoryId": "0909",
+                    "subCategoryName": "Unii 4 สิทธิประโยชน์"
+                }
+            ]
+        },
+        {
+            "categoryId": "11",
+            "categoryName": "น้ำมันเก่า",
+            "subcategory": [
+                {
+                    "subCategoryId": "1101",
+                    "subCategoryName": "น้ำมันเครื่องเก่า"
+                }
+            ]
+        },
+        {
+            "categoryId": "12",
+            "categoryName": "เครื่องมือเครื่อจักร",
+            "subcategory": [
+                {
+                    "subCategoryId": "1201",
+                    "subCategoryName": "ถัง IBC ขนาด 1000 ลิตร ( มือ 2 )"
+                },
+                {
+                    "subCategoryId": "1202",
+                    "subCategoryName": "เครื่องอัดแนวตั้ง"
+                },
+                {
+                    "subCategoryId": "1203",
+                    "subCategoryName": "ถุงมือช่าง ( เคลือบยางสีฟ้า )"
+                },
+                {
+                    "subCategoryId": "1204",
+                    "subCategoryName": "ถุงมือผ้าทอ"
+                }
+            ]
+        },
+        {
+            "categoryId": "13",
+            "categoryName": "อุปโภคบริโภค",
+            "subcategory": [
+                {
+                    "subCategoryId": "1301",
+                    "subCategoryName": "ผงซักฟอกตราซื่อสัตย์ ขนาด 700 กรัม"
+                },
+                {
+                    "subCategoryId": "1302",
+                    "subCategoryName": "ทับทิม น้ำมันปาล์ม ขนาด 1ลิตร"
+                },
+                {
+                    "subCategoryId": "1303",
+                    "subCategoryName": "ไข่ไก่ 1 แผง"
+                },
+                {
+                    "subCategoryId": "1304",
+                    "subCategoryName": "ข้าวหอมมะลิตราส้ม 5 กิโลกรัม"
+                },
+                {
+                    "subCategoryId": "1305",
+                    "subCategoryName": "ไลปอน เอฟ น้ำยาล้างจาน 500 มล."
+                },
+                {
+                    "subCategoryId": "1306",
+                    "subCategoryName": "เลย์ คลาสสิค มันฝรั่งแท้ทอดกรอบ รสโนริสาหร่าย 25 ก. x 6"
+                },
+                {
+                    "subCategoryId": "1307",
+                    "subCategoryName": "เบอร์ดี้ กาแฟปรุงสำเร็จพร้อมดื่ม โรบัสต้า 180 มล. 3 กระป๋อง"
+                },
+                {
+                    "subCategoryId": "1308",
+                    "subCategoryName": "ดาวน์นี่ น้ำยาปรับผ้านุ่ม สูตรเข้มข้นพิเศษ กลิ่นสวนดอกไม้ผลิ 110 มล. 3ห่อ"
+                },
+                {
+                    "subCategoryId": "1309",
+                    "subCategoryName": "ซอสหอยนางรม ตราแม่ครัว ขนาด 300 มล."
+                },
+                {
+                    "subCategoryId": "1310",
+                    "subCategoryName": "มาม่าบะหมี่กึ่งสำเร็จรูปรสหมูสับ 60กรัม 1แพค 10 ซอง"
+                },
+                {
+                    "subCategoryId": "1311",
+                    "subCategoryName": "เบอร์ดี้ กาแฟโรบัสต้าปรุงสำเร็จ ชนิดผง 3อิน1 15 ก. 27 ซอง"
+                },
+                {
+                    "subCategoryId": "1312",
+                    "subCategoryName": "โอวัลติน เครื่องดื่มมอลต์สกัด รสช็อกโกแลต 18 ก. x 24"
+                },
+                {
+                    "subCategoryId": "1313",
+                    "subCategoryName": "สามแม่ครัว ปลาซาร์ดีนในซอสมะเขือเทศ 155 ก. x 10 กระป๋อง"
+                },
+                {
+                    "subCategoryId": "1314",
+                    "subCategoryName": "สมาร์ทโฮม หม้อหุงข้าว 1 ล. รุ่น SRC1003"
+                }
+            ]
+        },
+        {
+            "categoryId": "14",
+            "categoryName": "น้ำมันพืชใช้เเล้ว ",
+            "subcategory": [
+                {
+                    "subCategoryId": "1401",
+                    "subCategoryName": "น้ำมันพืชใช้เเล้ว A"
+                }
+            ]
+        },
+        {
+            "categoryId": "15",
+            "categoryName": "น้ำมันพืชใหม่ ",
+            "subcategory": [
+                {
+                    "subCategoryId": "1501",
+                    "subCategoryName": "ตราผึ้ง น้ำมันปาล์ม ขวด 1ลิตร"
+                },
+                {
+                    "subCategoryId": "1502",
+                    "subCategoryName": "ตราผึ้ง น้ำมันปาล์ม ถุง 1ลิตร"
+                },
+                {
+                    "subCategoryId": "1503",
+                    "subCategoryName": "ตราลีลา น้ำมันปาล์ม ขวด1ลิตร"
+                },
+                {
+                    "subCategoryId": "1504",
+                    "subCategoryName": "ตราลีลา น้ำมันปาล์ม ถุง1ลิตร"
+                },
+                {
+                    "subCategoryId": "1505",
+                    "subCategoryName": "ตราผึ้ง น้ำมันปาล์ม ขวด 1ลิตร (หีบX12)"
+                },
+                {
+                    "subCategoryId": "1506",
+                    "subCategoryName": "ตราผึ้ง น้ำมันปาล์ม ถุง 1ลิตร หีบx12"
+                }
+            ]
+        }
+    ]
+}
