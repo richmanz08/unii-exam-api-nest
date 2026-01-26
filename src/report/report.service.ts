@@ -3,6 +3,7 @@ import { OrderService } from '../order/order.service';
 import { CategoryService } from '../category/category.service';
 import { StockSummaryFilterDto } from './dto/stock-summary-filter.dto';
 import { StockSummary } from './interfaces/stock-summary.interface';
+import { isNumber } from 'lodash';
 
 @Injectable()
 export class ReportService {
@@ -14,10 +15,34 @@ export class ReportService {
   async getStockSummary(
     filter: StockSummaryFilterDto,
   ): Promise<StockSummary[]> {
-    const orders = await this.orderService.getOrders();
-    const categories = await this.categoryService.getCategories();
+    const orders = await this.fetchOrders();
+    const categories = await this.fetchCategories();
+    const flatOrders = this.flattenOrders(orders);
+    const filteredOrders = this.applyFilters(flatOrders, filter);
+    const categoryMap = this.buildCategoryMap(categories);
+    const summary = this.groupSummary(filteredOrders, categoryMap);
+    return summary;
+  }
 
-    // Flatten all order items
+  private async fetchOrders(): Promise<any[]> {
+    const ordersData: any = await this.orderService.getOrders();
+    if (ordersData && Array.isArray(ordersData.buyTransaction)) {
+      return ordersData.buyTransaction;
+    } else if (Array.isArray(ordersData)) {
+      return ordersData;
+    }
+    return [];
+  }
+
+  private async fetchCategories(): Promise<any[]> {
+    const categoriesData: any = await this.categoryService.getCategories();
+    if (Array.isArray(categoriesData)) {
+      return categoriesData;
+    }
+    return categoriesData.productList ?? [];
+  }
+
+  private flattenOrders(orders: any[]): any[] {
     const flatOrders = [];
     for (const order of orders) {
       for (const req of order.requestList) {
@@ -36,17 +61,25 @@ export class ReportService {
         }
       }
     }
+    return flatOrders;
+  }
 
-    // Apply filters
+  private applyFilters(
+    flatOrders: any[],
+    filter: StockSummaryFilterDto,
+  ): any[] {
     let filteredOrders = flatOrders;
-    if (filter.dateFrom) {
+    if (filter.startOrderFinishDate) {
       filteredOrders = filteredOrders.filter(
-        (o) => new Date(o.orderFinishedDate) >= new Date(filter.dateFrom),
+        (o) =>
+          new Date(o.orderFinishedDate) >=
+          new Date(filter.startOrderFinishDate),
       );
     }
-    if (filter.dateTo) {
+    if (filter.endOrderFinishDate) {
       filteredOrders = filteredOrders.filter(
-        (o) => new Date(o.orderFinishedDate) <= new Date(filter.dateTo),
+        (o) =>
+          new Date(o.orderFinishedDate) <= new Date(filter.endOrderFinishDate),
       );
     }
     if (filter.categoryId) {
@@ -64,17 +97,21 @@ export class ReportService {
         (o) => o.orderId === filter.orderId,
       );
     }
-    if (typeof filter.priceMin === 'number') {
+    if (isNumber(filter.priceMin)) {
       filteredOrders = filteredOrders.filter((o) => o.price >= filter.priceMin);
     }
-    if (typeof filter.priceMax === 'number') {
+    if (isNumber(filter.priceMax)) {
       filteredOrders = filteredOrders.filter((o) => o.price <= filter.priceMax);
     }
     if (filter.grade) {
       filteredOrders = filteredOrders.filter((o) => o.grade === filter.grade);
     }
+    return filteredOrders;
+  }
 
-    // Prepare category/subcategory name lookup
+  private buildCategoryMap(
+    categories: any[],
+  ): Map<string, { categoryName: string; subCategoryName: string }> {
     const categoryMap = new Map<
       string,
       { categoryName: string; subCategoryName: string }
@@ -87,8 +124,13 @@ export class ReportService {
         });
       }
     }
+    return categoryMap;
+  }
 
-    // Group by categoryId, subCategoryId
+  private groupSummary(
+    filteredOrders: any[],
+    categoryMap: Map<string, { categoryName: string; subCategoryName: string }>,
+  ): StockSummary[] {
     const summaryMap = new Map<string, StockSummary>();
     for (const item of filteredOrders) {
       const key = `${item.categoryId}_${item.subCategoryId}`;
@@ -114,13 +156,11 @@ export class ReportService {
       summary.totalBuyWeight += item.quantity;
       summary.totalBuyAmount += item.total;
     }
-
     // Calculate remain
     for (const item of summaryMap.values()) {
       item.remainWeight = item.totalBuyWeight - item.totalSellWeight;
       item.remainAmount = item.totalBuyAmount - item.totalSellAmount;
     }
-
     return Array.from(summaryMap.values());
   }
 }

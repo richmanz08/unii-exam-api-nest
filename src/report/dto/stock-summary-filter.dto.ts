@@ -1,6 +1,6 @@
 export class StockSummaryFilterDto {
-  dateFrom?: string;
-  dateTo?: string;
+  startOrderFinishDate?: string;
+  endOrderFinishDate?: string;
   categoryId?: string;
   subCategoryId?: string;
   orderId?: string;
