@@ -24,4 +24,28 @@ export class OrderService {
     }
     return data;
   }
+
+  async getDistinctGrades(): Promise<string[]> {
+    const orders: any = await this.getOrders();
+    const grades = new Set<string>();
+
+    let orderList = [];
+    if (orders && Array.isArray(orders.buyTransaction)) {
+      orderList = orders.buyTransaction;
+    } else if (Array.isArray(orders)) {
+      orderList = orders;
+    }
+
+    for (const order of orderList) {
+      for (const req of order.requestList) {
+        for (const item of req.requestList) {
+          if (item.grade) {
+            grades.add(item.grade);
+          }
+        }
+      }
+    }
+
+    return Array.from(grades).sort();
+  }
 }

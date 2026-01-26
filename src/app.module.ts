@@ -6,6 +6,7 @@ import { ReportModule } from './report/report.module';
 import { OrderService } from './order/order.service';
 import { CategoryService } from './category/category.service';
 import { CategoryController } from './category/category.controller';
+import { OrderController } from './order/order.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { CategoryController } from './category/category.controller';
     HttpModule,
     ReportModule,
   ],
-  controllers: [CategoryController],
+  controllers: [CategoryController, OrderController],
   providers: [OrderService, CategoryService],
 })
 export class AppModule {}
