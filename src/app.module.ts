@@ -5,6 +5,7 @@ import { HttpModule } from '@nestjs/axios';
 import { ReportModule } from './report/report.module';
 import { OrderService } from './order/order.service';
 import { CategoryService } from './category/category.service';
+import { CategoryController } from './category/category.controller';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { CategoryService } from './category/category.service';
     HttpModule,
     ReportModule,
   ],
-  controllers: [],
+  controllers: [CategoryController],
   providers: [OrderService, CategoryService],
 })
 export class AppModule {}
