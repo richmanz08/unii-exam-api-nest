@@ -7,7 +7,6 @@ import { FlatOrder } from './interfaces/flat-order.interface';
 import { CategoryMapItem } from './interfaces/category-map-item.interface';
 import { OrderItem } from '../order/interfaces/order.interface';
 import { Category } from '../category/interfaces/category.interface';
-import { isNumber } from 'lodash';
 
 @Injectable()
 export class ReportService {
@@ -112,10 +111,10 @@ export class ReportService {
         (o) => o.orderId === filter.orderId,
       );
     }
-    if (isNumber(filter.priceMin)) {
+    if (filter.priceMin !== undefined && filter.priceMin !== null) {
       filteredOrders = filteredOrders.filter((o) => o.price >= filter.priceMin);
     }
-    if (isNumber(filter.priceMax)) {
+    if (filter.priceMax !== undefined && filter.priceMax !== null) {
       filteredOrders = filteredOrders.filter((o) => o.price <= filter.priceMax);
     }
     if (filter.grade) {
