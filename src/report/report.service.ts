@@ -83,13 +83,17 @@ export class ReportService {
       );
     }
     if (filter.categoryId) {
-      filteredOrders = filteredOrders.filter(
-        (o) => o.categoryId === filter.categoryId,
+      const categoryIds = filter.categoryId.split(',').map((c) => c.trim());
+      filteredOrders = filteredOrders.filter((o) =>
+        categoryIds.includes(o.categoryId),
       );
     }
     if (filter.subCategoryId) {
-      filteredOrders = filteredOrders.filter(
-        (o) => o.subCategoryId === filter.subCategoryId,
+      const subCategoryIds = filter.subCategoryId
+        .split(',')
+        .map((s) => s.trim());
+      filteredOrders = filteredOrders.filter((o) =>
+        subCategoryIds.includes(o.subCategoryId),
       );
     }
     if (filter.orderId) {
