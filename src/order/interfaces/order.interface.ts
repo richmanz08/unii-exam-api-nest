@@ -12,15 +12,26 @@ export interface OrderRequest {
 }
 
 export interface TransactionParties {
-  customer: { roleName: string; name: string; id: string };
-  transport: { roleName: string; name: string; id: string };
-  collector: { roleName: string; name: string; id: string };
+  customer: Parties;
+  transport: Parties;
+  collector: Parties;
 }
 
-export interface Order {
+interface Parties {
+  roleName: string;
+  name: string;
+  id: string;
+}
+
+export interface OrderItem {
   orderId: string;
   requestList: OrderRequest[];
   transactionParties: TransactionParties;
   orderFinishedDate: string;
   orderFinishedTime: string;
+}
+
+export interface Order {
+  buyTransaction: OrderItem[];
+  sellTransaction: OrderItem[];
 }

@@ -3,6 +3,10 @@ import { OrderService } from '../order/order.service';
 import { CategoryService } from '../category/category.service';
 import { StockSummaryFilterDto } from './dto/stock-summary-filter.dto';
 import { StockSummary } from './interfaces/stock-summary.interface';
+import { FlatOrder } from './interfaces/flat-order.interface';
+import { CategoryMapItem } from './interfaces/category-map-item.interface';
+import { OrderItem } from '../order/interfaces/order.interface';
+import { Category } from '../category/interfaces/category.interface';
 import { isNumber } from 'lodash';
 
 @Injectable()
@@ -16,34 +20,41 @@ export class ReportService {
     filter: StockSummaryFilterDto,
   ): Promise<StockSummary[]> {
     const orders = await this.fetchOrders();
+    const sellOrders = await this.fetchSellOrders();
     const categories = await this.fetchCategories();
-    const flatOrders = this.flattenOrders(orders);
-    const filteredOrders = this.applyFilters(flatOrders, filter);
+    const flatBuyOrders = this.flattenOrders(orders);
+    const flatSellOrders = this.flattenOrders(sellOrders);
+    const filteredBuyOrders = this.applyFilters(flatBuyOrders, filter);
+    const filteredSellOrders = this.applyFilters(flatSellOrders, filter);
     const categoryMap = this.buildCategoryMap(categories);
-    const summary = this.groupSummary(filteredOrders, categoryMap);
+    const summary = this.groupSummary(
+      filteredBuyOrders,
+      filteredSellOrders,
+      categoryMap,
+    );
     return summary;
   }
 
-  private async fetchOrders(): Promise<any[]> {
-    const ordersData: any = await this.orderService.getOrders();
-    if (ordersData && Array.isArray(ordersData.buyTransaction)) {
-      return ordersData.buyTransaction;
-    } else if (Array.isArray(ordersData)) {
-      return ordersData;
-    }
-    return [];
+  private async fetchOrders(): Promise<OrderItem[]> {
+    const ordersData = await this.orderService.getOrders();
+    return ordersData?.buyTransaction ?? [];
   }
 
-  private async fetchCategories(): Promise<any[]> {
-    const categoriesData: any = await this.categoryService.getCategories();
+  private async fetchSellOrders(): Promise<OrderItem[]> {
+    const ordersData = await this.orderService.getOrders();
+    return ordersData?.sellTransaction ?? [];
+  }
+
+  private async fetchCategories(): Promise<Category[]> {
+    const categoriesData = await this.categoryService.getCategories();
     if (Array.isArray(categoriesData)) {
-      return categoriesData;
+      return categoriesData as Category[];
     }
-    return categoriesData.productList ?? [];
+    return (categoriesData as any)?.productList ?? [];
   }
 
-  private flattenOrders(orders: any[]): any[] {
-    const flatOrders = [];
+  private flattenOrders(orders: OrderItem[]): FlatOrder[] {
+    const flatOrders: FlatOrder[] = [];
     for (const order of orders) {
       for (const req of order.requestList) {
         for (const item of req.requestList) {
@@ -65,9 +76,9 @@ export class ReportService {
   }
 
   private applyFilters(
-    flatOrders: any[],
+    flatOrders: FlatOrder[],
     filter: StockSummaryFilterDto,
-  ): any[] {
+  ): FlatOrder[] {
     let filteredOrders = flatOrders;
     if (filter.startOrderFinishDate) {
       filteredOrders = filteredOrders.filter(
@@ -115,12 +126,9 @@ export class ReportService {
   }
 
   private buildCategoryMap(
-    categories: any[],
-  ): Map<string, { categoryName: string; subCategoryName: string }> {
-    const categoryMap = new Map<
-      string,
-      { categoryName: string; subCategoryName: string }
-    >();
+    categories: Category[],
+  ): Map<string, CategoryMapItem> {
+    const categoryMap = new Map<string, CategoryMapItem>();
     for (const cat of categories) {
       for (const sub of cat.subcategory) {
         categoryMap.set(`${cat.categoryId}_${sub.subCategoryId}`, {
@@ -133,11 +141,14 @@ export class ReportService {
   }
 
   private groupSummary(
-    filteredOrders: any[],
-    categoryMap: Map<string, { categoryName: string; subCategoryName: string }>,
+    filteredBuyOrders: FlatOrder[],
+    filteredSellOrders: FlatOrder[],
+    categoryMap: Map<string, CategoryMapItem>,
   ): StockSummary[] {
     const summaryMap = new Map<string, StockSummary>();
-    for (const item of filteredOrders) {
+
+    // Process buy orders
+    for (const item of filteredBuyOrders) {
       const key = `${item.categoryId}_${item.subCategoryId}`;
       let summary = summaryMap.get(key);
       if (!summary) {
@@ -151,8 +162,8 @@ export class ReportService {
           productName: `${names.categoryName} - ${names.subCategoryName}`,
           totalBuyWeight: 0,
           totalBuyAmount: 0,
-          totalSellWeight: 0, // ไม่มีข้อมูลขายในตัวอย่างนี้
-          totalSellAmount: 0, // ไม่มีข้อมูลขายในตัวอย่างนี้
+          totalSellWeight: 0,
+          totalSellAmount: 0,
           remainWeight: 0,
           remainAmount: 0,
         };
@@ -161,6 +172,33 @@ export class ReportService {
       summary.totalBuyWeight += item.quantity;
       summary.totalBuyAmount += item.total;
     }
+
+    // Process sell orders
+    for (const item of filteredSellOrders) {
+      const key = `${item.categoryId}_${item.subCategoryId}`;
+      let summary = summaryMap.get(key);
+      if (!summary) {
+        const names = categoryMap.get(key) || {
+          categoryName: '',
+          subCategoryName: '',
+        };
+        summary = {
+          categoryId: item.categoryId,
+          subCategoryId: item.subCategoryId,
+          productName: `${names.categoryName} - ${names.subCategoryName}`,
+          totalBuyWeight: 0,
+          totalBuyAmount: 0,
+          totalSellWeight: 0,
+          totalSellAmount: 0,
+          remainWeight: 0,
+          remainAmount: 0,
+        };
+        summaryMap.set(key, summary);
+      }
+      summary.totalSellWeight += item.quantity;
+      summary.totalSellAmount += item.total;
+    }
+
     // Calculate remain
     for (const item of summaryMap.values()) {
       item.remainWeight = item.totalBuyWeight - item.totalSellWeight;

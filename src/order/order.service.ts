@@ -11,9 +11,9 @@ export class OrderService {
     private readonly httpService: HttpService,
   ) {}
 
-  async getOrders(): Promise<Order[]> {
+  async getOrders(): Promise<Order> {
     const cacheKey = 'order-data';
-    let data = await this.cacheManager.get<Order[]>(cacheKey);
+    let data = await this.cacheManager.get<Order>(cacheKey);
     if (!data) {
       const response$ = this.httpService.get(
         'https://apirecycle.unii.co.th/Stock/query-transaction-demo',
@@ -26,15 +26,10 @@ export class OrderService {
   }
 
   async getDistinctGrades(): Promise<string[]> {
-    const orders: any = await this.getOrders();
+    const orders = await this.getOrders();
     const grades = new Set<string>();
 
-    let orderList = [];
-    if (orders && Array.isArray(orders.buyTransaction)) {
-      orderList = orders.buyTransaction;
-    } else if (Array.isArray(orders)) {
-      orderList = orders;
-    }
+    const orderList = orders?.buyTransaction ?? [];
 
     for (const order of orderList) {
       for (const req of order.requestList) {
