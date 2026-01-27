@@ -104,7 +104,8 @@ export class ReportService {
       filteredOrders = filteredOrders.filter((o) => o.price <= filter.priceMax);
     }
     if (filter.grade) {
-      filteredOrders = filteredOrders.filter((o) => o.grade === filter.grade);
+      const grades = filter.grade.split(',').map((g) => g.trim());
+      filteredOrders = filteredOrders.filter((o) => grades.includes(o.grade));
     }
     return filteredOrders;
   }

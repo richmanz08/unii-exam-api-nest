@@ -6,5 +6,5 @@ export class StockSummaryFilterDto {
   orderId?: string;
   priceMin?: number;
   priceMax?: number;
-  grade?: string;
+  grade?: string; // ex: "A,B,C"
 }
