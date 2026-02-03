@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { HttpModule } from '@nestjs/axios';
 import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
-import { Transaction } from './entities/order-transaction.entity';
-import { OrderItem } from './entities/order-item.entity';
-import { OrderItemDetail } from './entities/order-item-detail.entity';
+import { Transaction, TransactionSchema } from './schemas/transaction.schema';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Transaction, OrderItem, OrderItemDetail]),
+    MongooseModule.forFeature([
+      { name: Transaction.name, schema: TransactionSchema },
+    ]),
     HttpModule,
   ],
   providers: [OrderService],

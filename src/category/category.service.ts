@@ -1,26 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { Category } from './entities/category.entity';
-import { SubCategory } from './entities/subcategory.entity';
+import { Category, CategoryDocument } from './schemas/category.schema';
 import { Category as CategoryInterface } from './interfaces/category.interface';
 
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
-    @InjectRepository(SubCategory)
-    private subCategoryRepository: Repository<SubCategory>,
+    @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
     private readonly httpService: HttpService,
   ) {}
 
-  async getCategories(): Promise<Category[]> {
-    return this.categoryRepository.find({
-      relations: ['subcategory'],
-    });
+  async getCategories(): Promise<CategoryDocument[]> {
+    return this.categoryModel.find().exec();
   }
 
   async syncCategoriesFromAPI(): Promise<{ message: string }> {
@@ -50,9 +44,8 @@ export class CategoryService {
         apiData = response.data.data;
       }
 
-      // Clear existing data - delete subcategories first due to foreign key constraint
-      await this.subCategoryRepository.createQueryBuilder().delete().execute();
-      await this.categoryRepository.createQueryBuilder().delete().execute();
+      // Clear existing data
+      await this.categoryModel.deleteMany({});
 
       // Save new data
       let categoryCount = 0;
@@ -60,29 +53,21 @@ export class CategoryService {
 
       await Promise.all(
         apiData.map(async (categoryData) => {
-          const category = this.categoryRepository.create({
+          const categoryDoc = new this.categoryModel({
             categoryId: categoryData.categoryId,
             categoryName: categoryData.categoryName,
+            subcategory: categoryData.subcategory || [],
           });
 
-          const savedCategory = await this.categoryRepository.save(category);
+          await categoryDoc.save();
           categoryCount++;
 
-          // Create and save subcategories
+          // Count subcategories
           if (categoryData.subcategory && categoryData.subcategory.length > 0) {
-            const subCategories = categoryData.subcategory.map((sub) => {
-              return this.subCategoryRepository.create({
-                subCategoryId: sub.subCategoryId,
-                subCategoryName: sub.subCategoryName,
-                categoryId: savedCategory.id,
-              });
-            });
-
-            await this.subCategoryRepository.save(subCategories);
-            subCategoryCount += subCategories.length;
+            subCategoryCount += categoryData.subcategory.length;
           }
 
-          return savedCategory;
+          return categoryDoc;
         }),
       );
 

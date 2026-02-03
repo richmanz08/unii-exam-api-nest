@@ -1,12 +1,20 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ReportController } from './report.controller';
 import { ReportService } from './report.service';
-import { CategoryModule } from '../category/category.module';
-import { OrderItemDetail } from '../order/entities/order-item-detail.entity';
+import {
+  Transaction,
+  TransactionSchema,
+} from '../order/schemas/transaction.schema';
+import { Category, CategorySchema } from '../category/schemas/category.schema';
 
 @Module({
-  imports: [CategoryModule, TypeOrmModule.forFeature([OrderItemDetail])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Transaction.name, schema: TransactionSchema },
+      { name: Category.name, schema: CategorySchema },
+    ]),
+  ],
   controllers: [ReportController],
   providers: [ReportService],
 })

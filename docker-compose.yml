@@ -1,17 +1,17 @@
 version: '3.8'
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: unii_exam_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: unii_exam_db
     ports:
-      - '5432:5432'
+      - '27017:27017'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mongodb_data:/data/db
     restart: unless-stopped
 
 volumes:
-  postgres_data:
+  mongodb_data:

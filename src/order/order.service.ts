@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { Transaction } from './entities/order-transaction.entity';
-import { OrderItem } from './entities/order-item.entity';
-import { OrderItemDetail } from './entities/order-item-detail.entity';
+import { Transaction, TransactionDocument } from './schemas/transaction.schema';
 import { TransactionType } from './enums/transaction-type.enum';
 import { Order as OrderInterface } from './interfaces/order.interface';
 import { OrderItem as OrderItemInterface } from './interfaces/order.interface';
@@ -13,12 +11,8 @@ import { OrderItem as OrderItemInterface } from './interfaces/order.interface';
 @Injectable()
 export class OrderService {
   constructor(
-    @InjectRepository(Transaction)
-    private transactionRepository: Repository<Transaction>,
-    @InjectRepository(OrderItem)
-    private orderItemRepository: Repository<OrderItem>,
-    @InjectRepository(OrderItemDetail)
-    private orderItemDetailRepository: Repository<OrderItemDetail>,
+    @InjectModel(Transaction.name)
+    private transactionModel: Model<TransactionDocument>,
     private readonly httpService: HttpService,
   ) {}
 
@@ -43,7 +37,7 @@ export class OrderService {
         throw new Error('Invalid API response structure');
       }
 
-      await this.transactionRepository.createQueryBuilder().delete().execute();
+      await this.transactionModel.deleteMany({});
 
       let buyCount = 0;
       let sellCount = 0;
@@ -75,11 +69,36 @@ export class OrderService {
   private async processTransactions(
     transactions: OrderItemInterface[],
     transactionType: TransactionType,
-  ): Promise<Transaction[]> {
-    const transactionsList: Transaction[] = [];
+  ): Promise<TransactionDocument[]> {
+    const transactionsList: TransactionDocument[] = [];
 
     for (const transaction of transactions) {
-      const newTransaction = this.transactionRepository.create({
+      const orderItems = [];
+
+      if (transaction.requestList && Array.isArray(transaction.requestList)) {
+        for (const request of transaction.requestList) {
+          const details = [];
+
+          if (request.requestList && Array.isArray(request.requestList)) {
+            for (const detail of request.requestList) {
+              details.push({
+                grade: detail.grade,
+                price: detail.price || 0,
+                quantity: detail.quantity,
+                total: detail.total || 0,
+              });
+            }
+          }
+
+          orderItems.push({
+            categoryId: request.categoryID,
+            subCategoryId: request.subCategoryID,
+            details,
+          });
+        }
+      }
+
+      const newTransaction = new this.transactionModel({
         transactionType,
         orderId: transaction.orderId,
         customerName: transaction.transactionParties?.customer?.name || '',
@@ -92,47 +111,10 @@ export class OrderService {
           ? new Date(transaction.orderFinishedDate)
           : null,
         finishedTime: transaction.orderFinishedTime || '',
+        orderItems,
       });
 
-      const savedTransaction = await this.transactionRepository.save(
-        newTransaction,
-      );
-
-      if (transaction.requestList && Array.isArray(transaction.requestList)) {
-        const orderItems: OrderItem[] = [];
-        for (const request of transaction.requestList) {
-          const orderItem = this.orderItemRepository.create({
-            transactionId: savedTransaction.id,
-            categoryId: request.categoryID,
-            subCategoryId: request.subCategoryID,
-          });
-
-          const savedOrderItem = await this.orderItemRepository.save(orderItem);
-
-          if (request.requestList && Array.isArray(request.requestList)) {
-            const details: OrderItemDetail[] = [];
-            for (const detail of request.requestList) {
-              const orderItemDetail = this.orderItemDetailRepository.create({
-                orderItemId: savedOrderItem.id,
-                grade: detail.grade,
-                price: detail.price || 0,
-                quantity: detail.quantity,
-                total: detail.total || 0,
-              });
-
-              const savedDetail = await this.orderItemDetailRepository.save(
-                orderItemDetail,
-              );
-              details.push(savedDetail);
-            }
-            savedOrderItem.details = details;
-          }
-
-          orderItems.push(savedOrderItem);
-        }
-        savedTransaction.orderItems = orderItems;
-      }
-
+      const savedTransaction = await newTransaction.save();
       transactionsList.push(savedTransaction);
     }
 
@@ -140,12 +122,20 @@ export class OrderService {
   }
 
   async getDistinctGrades(): Promise<string[]> {
-    const details = await this.orderItemDetailRepository.find();
+    const transactions = await this.transactionModel.find();
     const grades = new Set<string>();
 
-    for (const detail of details) {
-      if (detail.grade) {
-        grades.add(detail.grade);
+    for (const transaction of transactions) {
+      if (transaction.orderItems && Array.isArray(transaction.orderItems)) {
+        for (const item of transaction.orderItems) {
+          if (item.details && Array.isArray(item.details)) {
+            for (const detail of item.details) {
+              if (detail.grade) {
+                grades.add(detail.grade);
+              }
+            }
+          }
+        }
       }
     }
 
