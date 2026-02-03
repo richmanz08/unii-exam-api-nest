@@ -1,7 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { Category } from './interfaces/category.interface';
-import { get } from 'lodash';
+import { Category } from './entities/category.entity';
 
 @Controller('category')
 export class CategoryController {
@@ -9,8 +8,16 @@ export class CategoryController {
 
   @Get('list')
   async getCategoryList(): Promise<Category[]> {
-    const categoriesData = await this.categoryService.getCategories();
-    // Flatten the category list
-    return get(categoriesData, 'productList', []);
+    return this.categoryService.getCategories();
+  }
+
+  @Post('sync')
+  async syncCategories(): Promise<Category[]> {
+    return this.categoryService.syncCategoriesFromAPI();
+  }
+
+  @Get(':id')
+  async getCategoryById(id: string): Promise<Category> {
+    return this.categoryService.getCategoryById(id);
   }
 }

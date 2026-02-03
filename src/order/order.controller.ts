@@ -1,13 +1,39 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
+import { Transaction } from './entities/order-transaction.entity';
 
 interface GradesResponse {
   grades: string[];
 }
 
+interface SyncResponse {
+  buyTransactions: Transaction[];
+  sellTransactions: Transaction[];
+}
+
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
+
+  @Get('buy')
+  async getBuyTransactions(): Promise<Transaction[]> {
+    return this.orderService.getBuyTransactions();
+  }
+
+  @Get('sell')
+  async getSellTransactions(): Promise<Transaction[]> {
+    return this.orderService.getSellTransactions();
+  }
+
+  @Get('list')
+  async getOrders(): Promise<Transaction[]> {
+    return this.orderService.getOrders();
+  }
+
+  @Post('sync')
+  async syncOrders(): Promise<SyncResponse> {
+    return this.orderService.syncOrdersFromAPI();
+  }
 
   @Get('grades')
   async getDistinctGrades(): Promise<GradesResponse> {

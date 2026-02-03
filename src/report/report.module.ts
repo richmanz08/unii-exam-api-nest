@@ -1,13 +1,13 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { ReportController } from './report.controller';
 import { ReportService } from './report.service';
-import { OrderService } from '../order/order.service';
-import { CategoryService } from '../category/category.service';
+import { CategoryModule } from '../category/category.module';
+import { OrderModule } from '../order/order.module';
 
 @Module({
-  imports: [CacheModule.register(), HttpModule],
+  imports: [HttpModule, CategoryModule, OrderModule],
   controllers: [ReportController],
-  providers: [ReportService, OrderService, CategoryService],
+  providers: [ReportService],
 })
 export class ReportModule {}
