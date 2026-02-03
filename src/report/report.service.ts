@@ -48,7 +48,9 @@ export class ReportService {
       .setParameter('buy', 'buy')
       .setParameter('sell', 'sell')
       .groupBy('oi.categoryId')
-      .addGroupBy('oi.subCategoryId');
+      .addGroupBy('oi.subCategoryId')
+      .orderBy('oi.categoryId', 'ASC')
+      .addOrderBy('oi.subCategoryId', 'ASC');
 
     // Apply filters
     if (filter.orderId) {
