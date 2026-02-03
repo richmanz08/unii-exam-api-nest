@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { OrderService } from '../order/order.service';
 import { CategoryService } from '../category/category.service';
 import { StockSummaryFilterDto } from './dto/stock-summary-filter.dto';
 import { StockSummary } from './interfaces/stock-summary.interface';
 import { FlatOrder } from './interfaces/flat-order.interface';
 import { CategoryMapItem } from './interfaces/category-map-item.interface';
-import { OrderItem } from '../order/interfaces/order.interface';
-import { Category } from '../category/interfaces/category.interface';
+import { OrderItem as OrderItemInterface } from '../order/interfaces/order.interface';
+import { Category as CategoryInterface } from '../category/interfaces/category.interface';
+import { Transaction } from '../order/entities/order-transaction.entity';
 
 @Injectable()
 export class ReportService {
+  private readonly logger = new Logger(ReportService.name);
   constructor(
     private readonly orderService: OrderService,
     private readonly categoryService: CategoryService,
@@ -21,10 +23,13 @@ export class ReportService {
     const orders = await this.fetchOrders();
     const sellOrders = await this.fetchSellOrders();
     const categories = await this.fetchCategories();
+
     const flatBuyOrders = this.flattenOrders(orders);
     const flatSellOrders = this.flattenOrders(sellOrders);
+
     const filteredBuyOrders = this.applyFilters(flatBuyOrders, filter);
     const filteredSellOrders = this.applyFilters(flatSellOrders, filter);
+
     const categoryMap = this.buildCategoryMap(categories);
     const summary = this.groupSummary(
       filteredBuyOrders,
@@ -34,25 +39,75 @@ export class ReportService {
     return summary;
   }
 
-  private async fetchOrders(): Promise<OrderItem[]> {
-    const ordersData = await this.orderService.getOrders();
-    return ordersData?.buyTransaction ?? [];
+  private async fetchOrders(): Promise<OrderItemInterface[]> {
+    const ordersData = await this.orderService.getBuyTransactions();
+    return ordersData.map((order) => this.convertTransactionToInterface(order));
   }
 
-  private async fetchSellOrders(): Promise<OrderItem[]> {
-    const ordersData = await this.orderService.getOrders();
-    return ordersData?.sellTransaction ?? [];
+  private async fetchSellOrders(): Promise<OrderItemInterface[]> {
+    const ordersData = await this.orderService.getSellTransactions();
+    return ordersData.map((order) => this.convertTransactionToInterface(order));
   }
 
-  private async fetchCategories(): Promise<Category[]> {
+  private convertTransactionToInterface(
+    transaction: Transaction,
+  ): OrderItemInterface {
+    const requestList = transaction.orderItems
+      ? transaction.orderItems.map((item) => ({
+          categoryID: item.categoryId,
+          subCategoryID: item.subCategoryId,
+          requestList: item.details
+            ? item.details.map((detail) => ({
+                grade: detail.grade,
+                price: Number(detail.price) || 0,
+                quantity: detail.quantity,
+                total: Number(detail.total) || 0,
+              }))
+            : [],
+        }))
+      : [];
+
+    return {
+      orderId: transaction.orderId,
+      requestList,
+      transactionParties: {
+        customer: {
+          roleName: 'customer',
+          name: transaction.customerName,
+          id: transaction.customerId,
+        },
+        transport: {
+          roleName: 'transport',
+          name: transaction.transportName,
+          id: transaction.transportId,
+        },
+        collector: {
+          roleName: 'collector',
+          name: transaction.collectorName,
+          id: transaction.collectorId,
+        },
+      },
+      orderFinishedDate: transaction.finishedDate?.toString() || '',
+      orderFinishedTime: transaction.finishedTime || '',
+    };
+  }
+
+  private async fetchCategories(): Promise<CategoryInterface[]> {
     const categoriesData = await this.categoryService.getCategories();
     if (Array.isArray(categoriesData)) {
-      return categoriesData as Category[];
+      return categoriesData.map((cat) => ({
+        categoryId: cat.categoryId,
+        categoryName: cat.categoryName,
+        subcategory: cat.subcategory.map((sub) => ({
+          subCategoryId: sub.subCategoryId,
+          subCategoryName: sub.subCategoryName,
+        })),
+      }));
     }
-    return (categoriesData as any)?.productList ?? [];
+    return [];
   }
 
-  private flattenOrders(orders: OrderItem[]): FlatOrder[] {
+  private flattenOrders(orders: OrderItemInterface[]): FlatOrder[] {
     const flatOrders: FlatOrder[] = [];
     for (const order of orders) {
       for (const req of order.requestList) {
@@ -125,7 +180,7 @@ export class ReportService {
   }
 
   private buildCategoryMap(
-    categories: Category[],
+    categories: CategoryInterface[],
   ): Map<string, CategoryMapItem> {
     const categoryMap = new Map<string, CategoryMapItem>();
     for (const cat of categories) {
