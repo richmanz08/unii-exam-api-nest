@@ -23,7 +23,7 @@ export class CategoryService {
     });
   }
 
-  async syncCategoriesFromAPI(): Promise<Category[]> {
+  async syncCategoriesFromAPI(): Promise<{ message: string }> {
     try {
       const response$ = this.httpService.get(
         'https://apirecycle.unii.co.th/category/query-product-demo',
@@ -55,7 +55,10 @@ export class CategoryService {
       await this.categoryRepository.createQueryBuilder().delete().execute();
 
       // Save new data
-      const categories = await Promise.all(
+      let categoryCount = 0;
+      let subCategoryCount = 0;
+
+      await Promise.all(
         apiData.map(async (categoryData) => {
           const category = this.categoryRepository.create({
             categoryId: categoryData.categoryId,
@@ -63,6 +66,7 @@ export class CategoryService {
           });
 
           const savedCategory = await this.categoryRepository.save(category);
+          categoryCount++;
 
           // Create and save subcategories
           if (categoryData.subcategory && categoryData.subcategory.length > 0) {
@@ -75,23 +79,18 @@ export class CategoryService {
             });
 
             await this.subCategoryRepository.save(subCategories);
-            savedCategory.subcategory = subCategories;
+            subCategoryCount += subCategories.length;
           }
 
           return savedCategory;
         }),
       );
 
-      return categories;
+      return {
+        message: `Sync completed successfully. Categories: ${categoryCount}, Subcategories: ${subCategoryCount}`,
+      };
     } catch (error) {
       throw new Error(`Failed to sync categories from API: ${error.message}`);
     }
-  }
-
-  async getCategoryByCategoryId(categoryId: string): Promise<Category> {
-    return this.categoryRepository.findOne({
-      where: { categoryId },
-      relations: ['subcategory'],
-    });
   }
 }

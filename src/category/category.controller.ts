@@ -12,7 +12,7 @@ export class CategoryController {
   }
 
   @Post('sync')
-  async syncCategories(): Promise<Category[]> {
+  async syncCategories(): Promise<{ message: string }> {
     return this.categoryService.syncCategoriesFromAPI();
   }
 }

@@ -1,14 +1,8 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { Transaction } from './entities/order-transaction.entity';
 
 interface GradesResponse {
   grades: string[];
-}
-
-interface SyncResponse {
-  buyTransactions: Transaction[];
-  sellTransactions: Transaction[];
 }
 
 @Controller('order')
@@ -16,7 +10,7 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post('sync')
-  async syncOrders(): Promise<SyncResponse> {
+  async syncOrders(): Promise<{ message: string }> {
     return this.orderService.syncOrdersFromAPI();
   }
 

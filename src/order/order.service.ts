@@ -22,10 +22,7 @@ export class OrderService {
     private readonly httpService: HttpService,
   ) {}
 
-  async syncOrdersFromAPI(): Promise<{
-    buyTransactions: Transaction[];
-    sellTransactions: Transaction[];
-  }> {
+  async syncOrdersFromAPI(): Promise<{ message: string }> {
     try {
       const response$ = this.httpService.get(
         'https://apirecycle.unii.co.th/Stock/query-transaction-demo',
@@ -48,35 +45,42 @@ export class OrderService {
 
       await this.transactionRepository.createQueryBuilder().delete().execute();
 
-      let buyTransactions: Transaction[] = [];
-      let sellTransactions: Transaction[] = [];
+      let buyCount = 0;
+      let sellCount = 0;
 
       if (apiData.buyTransaction && Array.isArray(apiData.buyTransaction)) {
-        buyTransactions = await this.processBuyTransactions(
+        const buyTransactions = await this.processTransactions(
           apiData.buyTransaction,
+          TransactionType.BUY,
         );
+        buyCount = buyTransactions.length;
       }
 
       if (apiData.sellTransaction && Array.isArray(apiData.sellTransaction)) {
-        sellTransactions = await this.processSellTransactions(
+        const sellTransactions = await this.processTransactions(
           apiData.sellTransaction,
+          TransactionType.SELL,
         );
+        sellCount = sellTransactions.length;
       }
 
-      return { buyTransactions, sellTransactions };
+      return {
+        message: `Sync completed successfully. Buy transactions: ${buyCount}, Sell transactions: ${sellCount}`,
+      };
     } catch (error) {
       throw new Error(`Failed to sync orders from API: ${error.message}`);
     }
   }
 
-  private async processBuyTransactions(
+  private async processTransactions(
     transactions: OrderItemInterface[],
+    transactionType: TransactionType,
   ): Promise<Transaction[]> {
     const transactionsList: Transaction[] = [];
 
     for (const transaction of transactions) {
-      const buyTransaction = this.transactionRepository.create({
-        transactionType: TransactionType.BUY,
+      const newTransaction = this.transactionRepository.create({
+        transactionType,
         orderId: transaction.orderId,
         customerName: transaction.transactionParties?.customer?.name || '',
         customerId: transaction.transactionParties?.customer?.id || '',
@@ -91,73 +95,7 @@ export class OrderService {
       });
 
       const savedTransaction = await this.transactionRepository.save(
-        buyTransaction,
-      );
-
-      if (transaction.requestList && Array.isArray(transaction.requestList)) {
-        const orderItems: OrderItem[] = [];
-        for (const request of transaction.requestList) {
-          const orderItem = this.orderItemRepository.create({
-            transactionId: savedTransaction.id,
-            categoryId: request.categoryID,
-            subCategoryId: request.subCategoryID,
-          });
-
-          const savedOrderItem = await this.orderItemRepository.save(orderItem);
-
-          if (request.requestList && Array.isArray(request.requestList)) {
-            const details: OrderItemDetail[] = [];
-            for (const detail of request.requestList) {
-              const orderItemDetail = this.orderItemDetailRepository.create({
-                orderItemId: savedOrderItem.id,
-                grade: detail.grade,
-                price: detail.price || 0,
-                quantity: detail.quantity,
-                total: detail.total || 0,
-              });
-
-              const savedDetail = await this.orderItemDetailRepository.save(
-                orderItemDetail,
-              );
-              details.push(savedDetail);
-            }
-            savedOrderItem.details = details;
-          }
-
-          orderItems.push(savedOrderItem);
-        }
-        savedTransaction.orderItems = orderItems;
-      }
-
-      transactionsList.push(savedTransaction);
-    }
-
-    return transactionsList;
-  }
-
-  private async processSellTransactions(
-    transactions: OrderItemInterface[],
-  ): Promise<Transaction[]> {
-    const transactionsList: Transaction[] = [];
-
-    for (const transaction of transactions) {
-      const sellTransaction = this.transactionRepository.create({
-        transactionType: TransactionType.SELL,
-        orderId: transaction.orderId,
-        customerName: transaction.transactionParties?.customer?.name || '',
-        customerId: transaction.transactionParties?.customer?.id || '',
-        transportName: transaction.transactionParties?.transport?.name || '',
-        transportId: transaction.transactionParties?.transport?.id || '',
-        collectorName: transaction.transactionParties?.collector?.name || '',
-        collectorId: transaction.transactionParties?.collector?.id || '',
-        finishedDate: transaction.orderFinishedDate
-          ? new Date(transaction.orderFinishedDate)
-          : null,
-        finishedTime: transaction.orderFinishedTime || '',
-      });
-
-      const savedTransaction = await this.transactionRepository.save(
-        sellTransaction,
+        newTransaction,
       );
 
       if (transaction.requestList && Array.isArray(transaction.requestList)) {
