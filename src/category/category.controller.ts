@@ -15,9 +15,4 @@ export class CategoryController {
   async syncCategories(): Promise<Category[]> {
     return this.categoryService.syncCategoriesFromAPI();
   }
-
-  @Get(':id')
-  async getCategoryById(id: string): Promise<Category> {
-    return this.categoryService.getCategoryById(id);
-  }
 }

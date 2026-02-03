@@ -15,21 +15,6 @@ interface SyncResponse {
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Get('buy')
-  async getBuyTransactions(): Promise<Transaction[]> {
-    return this.orderService.getBuyTransactions();
-  }
-
-  @Get('sell')
-  async getSellTransactions(): Promise<Transaction[]> {
-    return this.orderService.getSellTransactions();
-  }
-
-  @Get('list')
-  async getOrders(): Promise<Transaction[]> {
-    return this.orderService.getOrders();
-  }
-
   @Post('sync')
   async syncOrders(): Promise<SyncResponse> {
     return this.orderService.syncOrdersFromAPI();

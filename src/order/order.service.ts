@@ -22,26 +22,6 @@ export class OrderService {
     private readonly httpService: HttpService,
   ) {}
 
-  async getBuyTransactions(): Promise<Transaction[]> {
-    return this.transactionRepository.find({
-      where: { transactionType: TransactionType.BUY },
-      relations: ['orderItems', 'orderItems.details'],
-    });
-  }
-
-  async getSellTransactions(): Promise<Transaction[]> {
-    return this.transactionRepository.find({
-      where: { transactionType: TransactionType.SELL },
-      relations: ['orderItems', 'orderItems.details'],
-    });
-  }
-
-  async getOrders(): Promise<Transaction[]> {
-    return this.transactionRepository.find({
-      relations: ['orderItems', 'orderItems.details'],
-    });
-  }
-
   async syncOrdersFromAPI(): Promise<{
     buyTransactions: Transaction[];
     sellTransactions: Transaction[];

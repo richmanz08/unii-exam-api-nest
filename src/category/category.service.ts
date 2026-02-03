@@ -88,13 +88,6 @@ export class CategoryService {
     }
   }
 
-  async getCategoryById(id: string): Promise<Category> {
-    return this.categoryRepository.findOne({
-      where: { id },
-      relations: ['subcategory'],
-    });
-  }
-
   async getCategoryByCategoryId(categoryId: string): Promise<Category> {
     return this.categoryRepository.findOne({
       where: { categoryId },
