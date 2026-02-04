@@ -5,6 +5,7 @@ import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import { Category, CategoryDocument } from './schemas/category.schema';
 import { Category as CategoryInterface } from './interfaces/category.interface';
+import { get } from 'lodash';
 
 @Injectable()
 export class CategoryService {
@@ -19,60 +20,32 @@ export class CategoryService {
 
   async syncCategoriesFromAPI(): Promise<{ message: string }> {
     try {
-      const response$ = this.httpService.get(
-        'https://apirecycle.unii.co.th/category/query-product-demo',
-      );
-      const response = await lastValueFrom(response$);
-
-      // Log response structure for debugging
-      console.log(
-        'API Response:',
-        JSON.stringify(response.data, null, 2).substring(0, 500),
+      const response = await lastValueFrom(
+        this.httpService.get(
+          'https://apirecycle.unii.co.th/category/query-product-demo',
+        ),
       );
 
-      // Handle different response structures
-      let apiData: CategoryInterface[] = [];
-      if (Array.isArray(response.data)) {
-        apiData = response.data;
-      } else if (response.data && Array.isArray(response.data.productList)) {
-        apiData = response.data.productList;
-      } else if (
-        response.data &&
-        response.data.data &&
-        Array.isArray(response.data.data)
-      ) {
-        apiData = response.data.data;
+      const list: CategoryInterface[] = get(
+        response.data,
+        'productList',
+        response.data,
+      );
+
+      if (!Array.isArray(list) || !list.length) {
+        throw new Error('Invalid API response structure');
       }
 
-      // Clear existing data
       await this.categoryModel.deleteMany({});
+      const inserted = await this.categoryModel.insertMany(list);
 
-      // Save new data
-      let categoryCount = 0;
-      let subCategoryCount = 0;
-
-      await Promise.all(
-        apiData.map(async (categoryData) => {
-          const categoryDoc = new this.categoryModel({
-            categoryId: categoryData.categoryId,
-            categoryName: categoryData.categoryName,
-            subcategory: categoryData.subcategory || [],
-          });
-
-          await categoryDoc.save();
-          categoryCount++;
-
-          // Count subcategories
-          if (categoryData.subcategory && categoryData.subcategory.length > 0) {
-            subCategoryCount += categoryData.subcategory.length;
-          }
-
-          return categoryDoc;
-        }),
+      const subCategoryCount = inserted.reduce(
+        (sum, cat) => sum + (cat.subcategory?.length || 0),
+        0,
       );
 
       return {
-        message: `Sync completed successfully. Categories: ${categoryCount}, Subcategories: ${subCategoryCount}`,
+        message: `Sync completed successfully. Categories: ${inserted.length}, Subcategories: ${subCategoryCount}`,
       };
     } catch (error) {
       throw new Error(`Failed to sync categories from API: ${error.message}`);

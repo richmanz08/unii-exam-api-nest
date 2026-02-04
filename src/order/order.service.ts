@@ -7,6 +7,7 @@ import { Transaction, TransactionDocument } from './schemas/transaction.schema';
 import { TransactionType } from './enums/transaction-type.enum';
 import { Order as OrderInterface } from './interfaces/order.interface';
 import { OrderItem as OrderItemInterface } from './interfaces/order.interface';
+import { get, isArray } from 'lodash';
 
 @Injectable()
 export class OrderService {
@@ -23,17 +24,9 @@ export class OrderService {
       );
       const response = await lastValueFrom(response$);
 
-      console.log(
-        'API Response:',
-        JSON.stringify(response.data, null, 2).substring(0, 500),
-      );
+      const order: OrderInterface = get(response, 'data', null);
 
-      let apiData: OrderInterface = null;
-      if (response.data && response.data.buyTransaction) {
-        apiData = response.data;
-      }
-
-      if (!apiData) {
+      if (!order) {
         throw new Error('Invalid API response structure');
       }
 
@@ -42,17 +35,17 @@ export class OrderService {
       let buyCount = 0;
       let sellCount = 0;
 
-      if (apiData.buyTransaction && Array.isArray(apiData.buyTransaction)) {
+      if (isArray(get(order, 'buyTransaction', null))) {
         const buyTransactions = await this.processTransactions(
-          apiData.buyTransaction,
+          order.buyTransaction,
           TransactionType.BUY,
         );
         buyCount = buyTransactions.length;
       }
 
-      if (apiData.sellTransaction && Array.isArray(apiData.sellTransaction)) {
+      if (isArray(get(order, 'sellTransaction', null))) {
         const sellTransactions = await this.processTransactions(
-          apiData.sellTransaction,
+          order.sellTransaction,
           TransactionType.SELL,
         );
         sellCount = sellTransactions.length;
@@ -70,75 +63,60 @@ export class OrderService {
     transactions: OrderItemInterface[],
     transactionType: TransactionType,
   ): Promise<TransactionDocument[]> {
-    const transactionsList: TransactionDocument[] = [];
+    return Promise.all(
+      transactions.map((i) =>
+        this.transactionModel.create({
+          transactionType,
+          orderId: i.orderId,
+          customerName: i.transactionParties?.customer?.name || '',
+          customerId: i.transactionParties?.customer?.id || '',
+          transportName: i.transactionParties?.transport?.name || '',
+          transportId: i.transactionParties?.transport?.id || '',
+          collectorName: i.transactionParties?.collector?.name || '',
+          collectorId: i.transactionParties?.collector?.id || '',
+          finishedDate: i.orderFinishedDate
+            ? new Date(i.orderFinishedDate)
+            : null,
+          finishedTime: i.orderFinishedTime || '',
+          orderItems: this.buildOrderItems(i.requestList),
+        }),
+      ),
+    );
+  }
 
-    for (const transaction of transactions) {
-      const orderItems = [];
-
-      if (transaction.requestList && Array.isArray(transaction.requestList)) {
-        for (const request of transaction.requestList) {
-          const details = [];
-
-          if (request.requestList && Array.isArray(request.requestList)) {
-            for (const detail of request.requestList) {
-              details.push({
-                grade: detail.grade,
-                price: detail.price || 0,
-                quantity: detail.quantity,
-                total: detail.total || 0,
-              });
-            }
-          }
-
-          orderItems.push({
-            categoryId: request.categoryID,
-            subCategoryId: request.subCategoryID,
-            details,
-          });
-        }
-      }
-
-      const newTransaction = new this.transactionModel({
-        transactionType,
-        orderId: transaction.orderId,
-        customerName: transaction.transactionParties?.customer?.name || '',
-        customerId: transaction.transactionParties?.customer?.id || '',
-        transportName: transaction.transactionParties?.transport?.name || '',
-        transportId: transaction.transactionParties?.transport?.id || '',
-        collectorName: transaction.transactionParties?.collector?.name || '',
-        collectorId: transaction.transactionParties?.collector?.id || '',
-        finishedDate: transaction.orderFinishedDate
-          ? new Date(transaction.orderFinishedDate)
-          : null,
-        finishedTime: transaction.orderFinishedTime || '',
-        orderItems,
-      });
-
-      const savedTransaction = await newTransaction.save();
-      transactionsList.push(savedTransaction);
-    }
-
-    return transactionsList;
+  private buildOrderItems(requestList: any[]): any[] {
+    return (requestList || []).map((request) => ({
+      categoryId: request.categoryID,
+      subCategoryId: request.subCategoryID,
+      details: (request.requestList || []).map((detail) => ({
+        grade: detail.grade,
+        price: detail.price || 0,
+        quantity: detail.quantity,
+        total: detail.total || 0,
+      })),
+    }));
   }
 
   async getDistinctGrades(): Promise<string[]> {
-    const transactions = await this.transactionModel.find();
-    const grades = new Set<string>();
+    const results = await this.transactionModel.aggregate([
+      { $unwind: '$orderItems' },
+      { $unwind: '$orderItems.details' },
+      {
+        $group: {
+          _id: '$orderItems.details.grade',
+        },
+      },
+      {
+        $match: { _id: { $ne: null } },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+      {
+        $project: { _id: 1 },
+      },
+    ]);
 
-    for (const transaction of transactions) {
-      if (transaction.orderItems && Array.isArray(transaction.orderItems)) {
-        for (const item of transaction.orderItems) {
-          if (item.details && Array.isArray(item.details)) {
-            for (const detail of item.details) {
-              if (detail.grade) {
-                grades.add(detail.grade);
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return Array.from(grades).sort();
+    return results.map((r) => r._id);
   }
 }

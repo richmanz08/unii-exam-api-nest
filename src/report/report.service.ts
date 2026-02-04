@@ -12,6 +12,7 @@ import {
 import { TransactionType } from '../order/enums/transaction-type.enum';
 import { StockSummaryFilterDto } from './dto/stock-summary-filter.dto';
 import { StockSummary } from './interfaces/stock-summary.interface';
+import { isNumber } from 'lodash';
 
 interface AggregatedStockResult {
   _id: {
@@ -37,38 +38,32 @@ export class ReportService {
   async getStockSummary(
     filter: StockSummaryFilterDto,
   ): Promise<StockSummary[]> {
-    // Use database aggregation directly
-    const results = await this.querySummary(filter);
+    const [results, categories] = await Promise.all([
+      this.querySummary(filter),
+      this.categoryModel.find().lean().exec(),
+    ]);
 
-    // Get categories to map IDs to names
-    const categories = await this.categoryModel.find().exec();
+    const categoryMap = new Map(
+      categories.flatMap((cat) =>
+        cat.subcategory.map((sub) => [
+          `${cat.categoryId}|${sub.subCategoryId}`,
+          {
+            categoryName: cat.categoryName,
+            subcategoryName: sub.subCategoryName,
+          },
+        ]),
+      ),
+    );
 
-    // Build category map
-    const categoryMap = new Map<
-      string,
-      { categoryName: string; subcategoryName: string }
-    >();
-    categories.forEach((category) => {
-      category.subcategory.forEach((sub) => {
-        const key = `${category.categoryId}|${sub.subCategoryId}`;
-        categoryMap.set(key, {
-          categoryName: category.categoryName,
-          subcategoryName: sub.subCategoryName,
-        });
-      });
-    });
-
-    // Transform productName using category names
     return results.map((result) => {
-      const key = `${result.categoryId}|${result.subCategoryId}`;
-      const categoryInfo = categoryMap.get(key);
-      const productName = categoryInfo
-        ? `${categoryInfo.categoryName} / ${categoryInfo.subcategoryName}`
-        : `${result.categoryId} - ${result.subCategoryId}`;
-
+      const info = categoryMap.get(
+        `${result.categoryId}|${result.subCategoryId}`,
+      );
       return {
         ...result,
-        productName,
+        productName: info
+          ? `${info.categoryName} / ${info.subcategoryName}`
+          : `${result.categoryId} - ${result.subCategoryId}`,
       };
     });
   }
@@ -125,13 +120,13 @@ export class ReportService {
 
     // Stage 5: Filter by price
     const priceMatch: Record<string, any> = {};
-    if (filter.priceMin !== undefined && filter.priceMin !== null) {
+    if (isNumber(filter.priceMin)) {
       priceMatch['orderItems.details.price'] = {
         ...priceMatch['orderItems.details.price'],
         $gte: filter.priceMin,
       };
     }
-    if (filter.priceMax !== undefined && filter.priceMax !== null) {
+    if (isNumber(filter.priceMax)) {
       priceMatch['orderItems.details.price'] = {
         ...priceMatch['orderItems.details.price'],
         $lte: filter.priceMax,
