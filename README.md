@@ -57,10 +57,18 @@ GET /report/stock-summary
 GET /category/list
 ```
 
+```
+POST /category/sync
+```
+
 ### Distinct Grades
 
 ```
 GET /order/grades
+```
+
+```
+GET /order/sync
 ```
 
 ## 📦 Available Commands
